@@ -18,6 +18,19 @@ resource "aws_s3_bucket" "my_s3_bucket" {
         enabled = true
     }
 }
+
+resource "aws_iam_user" "my_iam_user" {
+    name = "my_iam_user"
+}
 # STATE
 # DESIRED - KNOWN - ACTUAL
 # Terraform is declarative.
+
+# Output
+output "my_s3_bucket_complete_details" {
+    value = aws_s3_bucket.my_s3_bucket
+}
+
+output "my_iam_user" {
+  value = aws_iam_user.my_iam_user
+}
