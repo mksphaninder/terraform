@@ -1,2 +1,3 @@
-**/01-terraform-basics/.terraform/
+.terraform
 *.tfstate
+*.tfstate.backup
