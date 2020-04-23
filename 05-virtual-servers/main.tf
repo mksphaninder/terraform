@@ -1,7 +1,3 @@
-variable "aws_key_pair" {
-  default = "~/aws/aws_keys/default-ec2.pem"
-}
-
 # Name of the cloud.
 provider "aws" {
   region  = "us-east-1"
@@ -41,9 +37,9 @@ resource "aws_security_group" "http_server_sg" {
 }
 
 resource "aws_instance" "http_server" {
-  ami                    = "ami-0323c3dd2da7fb37d" # OS
-  key_name               = "default-ec2"           # key-pair name
-  instance_type          = "t2.micro"              # H/W
+  ami                    = data.aws_ami.aws_linux_2_latest.id # OS
+  key_name               = var.key_pair                       # key-pair name
+  instance_type          = var.cpu_type                       # H/W
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
   subnet_id              = tolist(data.aws_subnet_ids.default_subnets.ids)[0] # N/W inside vpc
 
@@ -68,8 +64,3 @@ resource "aws_instance" "http_server" {
 resource "aws_default_vpc" "default" {
 
 }
-
-data "aws_subnet_ids" "default_subnets" {
-  vpc_id = aws_default_vpc.default.id
-}
-

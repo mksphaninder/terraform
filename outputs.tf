@@ -10,4 +10,9 @@ output "aws_instance_dns" {
   value = "aws_instance.http_server.public_dns"
 }
 
+output "aws_ami_name" {
+  value = data.aws_ami.aws_linux_2_latest.id
+}
+
+
 
