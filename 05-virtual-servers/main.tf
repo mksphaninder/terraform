@@ -14,7 +14,7 @@ provider "aws" {
 
 resource "aws_security_group" "http_server_sg" {
   name   = "http_server_sg"
-  vpc_id = "vpc-e749789d"
+  vpc_id = aws_default_vpc.default.id
 
   ingress {
     from_port   = 80
@@ -58,10 +58,13 @@ resource "aws_instance" "http_server" {
   provisioner "remote-exec" {
     inline = [
       "sudo yum install httpd -y",                                                                                # install apache server
-      "sudo service httpd start",                                                                                 #start the server
+      "sudo service httpd start",                                                                                 # start the server
       "echo Welcome krishna -virtual server ip address is ${self.public_dns} | sudo tee /var/www/html/index.html" # copy a file
     ]
   }
 
 }
 
+resource "aws_default_vpc" "default" {
+
+}
